@@ -1,0 +1,243 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ICPARSA</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
+    <link rel="stylesheet" type="text/css" href="{% static '/css/main.css' %}">
+    {#    <link rel="stylesheet" type="text/css" href="{% static '/css/homepage.css' %}">#}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="module" src="https://cdn.jsdelivr.net/npm/chart.js/dist/chart.min.js"></script>
+
+</head>
+<body>
+
+{% include 'icparsa/template/navbar.html' %}
+<div class="container-fluid">
+    <div class="row flex-nowrap">
+        <div class="col-auto col-md-3 col-xl-2 px-sm-2 px-0 bg-dark">
+            <div class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100">
+                {#                <a href="/static"#}
+                {#                   class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none">#}
+                {#                    <span class="fs-5 d-none d-sm-inline">Menu</span>#}
+                {#                </a>#}
+                <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start" id="menu">
+                    <li class="nav-item">
+                        <a href="{% url 'home' %}" class="nav-link align-middle px-0">
+                            <i class="fs-4 bi-house"></i> <span class="ms-1 d-none d-sm-inline">Home</span>
+                        </a>
+                    </li>
+                    {% if request.user in procurementManager or request.user in admins %}
+                        <li>
+                            <a href="#submenu1" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                                <i class="bi bi-file-earmark-text"></i>
+                                <span class="ms-1 d-none d-sm-inline">Contract</span>
+                            </a>
+                            <ul class="collapse  nav flex-column ms-1" id="submenu1" data-bs-parent="#menu">
+                                <li class="w-100">
+                                    <a href="{% url 'cont' %}" class="nav-link px-0"><i class="bi bi-file-plus"></i>
+                                        <span class="d-none d-sm-inline">New</span> </a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'conts' %}" class="nav-link px-0">
+                                        <i class="bi bi-card-checklist"></i> <span
+                                            class="d-none d-sm-inline">List</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    {% endif %}
+{#                    <li>#}
+                    {#                        <a href="{% url 'gl' pk=employee.pk %}" class="nav-link px-0 align-middle">#}
+                    {#                            <i class="fa-solid fa-person-walking-arrow-right"></i>#}
+                    {#                            <span class="ms-1 d-none d-sm-inline">Take a Leave</span>#}
+                    {#                        </a>#}
+                    {#                    </li>#}
+                    {% if  request.user in leaveManager or request.user in admins %}
+                        <li>
+                            <a href="#submenu01" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                                <i class="fa-solid fa-person-walking-arrow-right"></i>
+                                <span class="ms-1 d-none d-sm-inline">Leave</span>
+                            </a>
+                            <ul class="collapse  nav flex-column ms-1" id="submenu01" data-bs-parent="#menu">
+                                <li class="w-100">
+                                    <a href="{% url 'gl' pk=employee.pk %}" class="nav-link px-0">
+                                        <i class="bi bi-file-plus"></i>
+                                        <span class="d-none d-sm-inline">Take Leave</span> </a>
+                                </li>
+                                <li class="w-100">
+                                    <a href="{% url 'rl' %}" class="nav-link px-0">
+                                        <i class="bi bi-file-plus"></i>
+                                        <span class="d-none d-sm-inline">New</span> </a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'lil' %}" class="nav-link px-0">
+                                        <i class="bi bi-card-checklist"></i> <span
+                                            class="d-none d-sm-inline">List</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    {% endif %}
+                    {% if  request.user in correspondenceManager  or request.user in admins %}
+                        <li>
+                            <a href="#submenu02" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                                <i class="fa-regular fa-envelope"></i>
+                                <span class="ms-1 d-none d-sm-inline">Correspondence</span>
+                            </a>
+                            <ul class="collapse  nav flex-column ms-1" id="submenu02" data-bs-parent="#menu">
+                                <li class="w-100">
+                                    <a href="{% url 'cor' %}" class="nav-link px-0"><i class="bi bi-file-plus"></i>
+                                        <span class="d-none d-sm-inline">New</span> </a>
+                                </li>
+                                <li>
+                                    <a href="{% url 'lic' %}" class="nav-link px-0">
+                                        <i class="bi bi-card-checklist"></i> <span
+                                            class="d-none d-sm-inline">List</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    {% endif %}
+                    {% if request.user  in admins %}
+                        <li>
+                            <a href="#submenu2" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                                <i class="fa-solid fa-handshake"></i> <span
+                                    class="ms-1 d-none d-sm-inline">Second Party</span>
+                            </a>
+                            <ul class="collapse nav flex-column ms-1" id="submenu2" data-bs-parent="#menu">
+                                <li class="w-100">
+                                    <a href="#submenu2-1" data-bs-toggle="collapse" class="nav-link px-0">
+                                        <i class="fs-4 bi-people"></i><span class="d-none d-sm-inline">Employee</span>
+                                    </a>
+                                    <ul class="collapse nav flex-column ms-1" id="submenu2-1"
+                                        data-bs-parent="#submenu2">
+                                        <li><a href="{% url 'cem' %}" class="nav-link px-0"><i
+                                                class="fa-solid fa-newspaper"></i>
+                                            <span class="ms-1 d-none d-sm-inline">New</span>
+                                        </a>
+                                        </li>
+                                        <li><a href="{% url 'lem' %}" class="nav-link px-0">
+                                            <i class="bi bi-card-checklist"></i>
+                                            <span class="ms-1 d-none d-sm-inline">List</span>
+                                        </a></li>
+                                    </ul>
+                                </li>
+
+                                <li class="w-100">
+                                    <a href="#submenu2-2" data-bs-toggle="collapse" class="nav-link px-0">
+                                        <i class="fa-solid fa-building"></i>
+                                        <span class="d-none d-sm-inline">Company</span>
+                                    </a>
+                                    <ul class="collapse nav flex-column ms-1" id="submenu2-2"
+                                        data-bs-parent="#submenu2">
+                                        <li><a href="{% url 'inst' %}" class="nav-link px-0"><i
+                                                class="bi bi-file-plus"></i>
+                                            <span class="ms-1 d-none d-sm-inline">New</span></a></li>
+
+                                        <li><a href="{% url 'insts' %}" class="nav-link px-0"><i
+                                                class="bi bi-card-checklist"></i>
+                                            <span class="d-none, d-sm-inline">List</span> </a></li>
+                                    </ul>
+                                </li>
+
+                            </ul>
+                        </li>
+                    {% endif %}
+                    {% if request.user in admins %}
+                        <li>
+                            <a href="#submenu4" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                                <i class="fa-solid fa-gears"></i> <span
+                                    class="ms-1 d-none d-sm-inline">Setting</span>
+                            </a>
+                            <ul class="collapse nav flex-column ms-1" id="submenu4" data-bs-parent="#menu">
+                                <li class="w-100">
+                                    <a href="#submenu4-1" data-bs-toggle="collapse" class="nav-link px-0">
+                                        <i class="bi bi-tools"></i>
+                                        <span class="d-none d-sm-inline">System</span>
+                                    </a>
+                                    <ul class="collapse nav flex-column ms-1" id="submenu4-1"
+                                        data-bs-parent="#submenu3">
+                                        <li><a href="{% url 'cop' %}" class="nav-link px-0">Company</a></li>
+                                        <li><a href="{% url 'spt' %}" class="nav-link px-0">SC_Type</a></li>
+                                        <li><a href="{% url 'liconset' %}" class="nav-link px-0">Contract</a></li>
+                                        <li><a href="#" class="nav-link px-0">End user</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    {% endif %}
+                    {% if request.user in admins %}
+                        <li>
+                            <a href="#submenu3" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                                <i class="fs-4 bi-gear-wide-connected"></i> <span
+                                    class="ms-1 d-none d-sm-inline">Configure</span>
+                            </a>
+                            <ul class="collapse nav flex-column ms-1" id="submenu3" data-bs-parent="#menu">
+                                <li class="w-100">
+                                    <a href="#submenu3-1" data-bs-toggle="collapse" class="nav-link px-0">
+                                        <i class="fs-4 bi-people"></i><span class="d-none d-sm-inline">User</span>
+                                    </a>
+                                    <ul class="collapse nav flex-column ms-1" id="submenu3-1"
+                                        data-bs-parent="#submenu3">
+                                        <li><a href="{% url 'reg' %}" class="nav-link px-0">System user</a></li>
+                                        <li><a href="{% url 'reg' %}" class="nav-link px-0">End user</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+                    {% endif %}
+                    {% if request.user  in admins %}
+                        <li>
+                            <a href="#" class="nav-link px-0 align-middle">
+                                <i class="fs-4 bi-people"></i> <span class="ms-1 d-none d-sm-inline">Users</span> </a>
+                        </li>
+                    {% endif %}
+                </ul>
+                <hr>
+                <div class="dropdown pb-4">
+                    <a href="#" class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
+                       id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="{% static 'img/logo.png' %}" alt="Logo" width="70" height="40"
+                             class="rounded-circle">
+                        <span class="d-none d-sm-inline mx-1">{{ request.user }}</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
+                        {#                        <li><a class="dropdown-item" href="#">New project...</a></li>#}
+                        {#                        <li><a class="dropdown-item" href="#">Settings</a></li>#}
+                        {#                        <li><a class="dropdown-item" href="#">Profile</a></li>#}
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="{% url 'lout' %}">Sign out</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="col py-0">
+
+
+            {% block content %}
+
+
+            {% endblock %}
+        </div>
+    </div>
+</div>
+
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+    setTimeout(function () {
+        location.reload();
+    }, 1000000);
+</script>
+</html>

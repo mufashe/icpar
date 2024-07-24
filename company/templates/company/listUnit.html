@@ -1,0 +1,68 @@
+{% extends 'icparsa/template/main.html' %}
+
+{% block content %}
+    <br/>
+    <div class="row">
+        <div class="col-md">
+            <div class="card">
+                <div class="card-header">
+                    <form>
+                        <div class="row">
+                            <div class="col-2 p-0">
+                                <a class="btn btn-outline-primary btn-sm p-1" href="/cop/cun"
+                                   style="font-size: smaller">
+                                    <i class="fa-solid fa-users-rays"></i>
+                                    Add Unit
+                                </a>
+                            </div>
+                            <div class="col-2 p-0">
+                                <a class="btn btn-outline-primary btn-sm p-1" href="/cop/tit"
+                                   style="font-size: smaller">
+                                    <i class="fa-solid fa-signs-post"></i>
+                                    Add Title
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col-md">
+            <div class="card card-body" style="font-size: x-small">
+                <table class="table table-striped table-bordered table-sm small " id="tbl">
+
+                    <tr>
+                        <th>No</th>
+                        <th>Company</th>
+                        <th>Department</th>
+                        <th>Unit</th>
+                        <th colspan="2">Action</th>
+
+                    </tr>
+                    {% for u in unitList %}
+
+                        <tr>
+                            <td>{{ u.number }}</td>
+                            <td>{{ u.company }}</td>
+                            <td>{{ u.department }}</td>
+                            <td>{{ u.name }}</td>
+                            <td><a class="btn btn-sm btn-info" href="{% url 'upun' u.id %}" style="font-size: smaller">Update</a>
+                            </td>
+                            <td><a class="btn btn-sm btn-danger" href="{% url 'delun' u.id %}"
+                                   style="font-size: smaller">Delete</a></td>
+
+                        </tr>
+
+
+                    {% endfor %}
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,10 @@
+{% for ct in contractType %}
+
+    <label>
+        <select>
+            <option value="{{ ct.pk }}">{{ ct.name }}</option>
+        </select>
+    </label>
+
+
+{% endfor %}

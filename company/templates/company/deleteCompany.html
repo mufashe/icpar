@@ -1,0 +1,22 @@
+{% extends 'icparsa/template/main.html' %}
+{% load crispy_forms_filters %}
+{% block content %}
+    <br>
+    <div class="row text-center">
+        <div class="col-md-6">
+            <div class="card card-body">
+                <p>Are you sure you want to delete "{{ company }}"? </p>
+                <form action="{% url 'delCo' company.id %}" method="post">
+                    {% csrf_token %}
+                    <a class="btn btn-warning" href="{% url 'lc' %}"><i class="fa-solid fa-xmark"></i>Cancel</a>
+                    <button class="btn btn-danger" type="submit" name="Confirm">
+                        <i class="fa-solid fa-check"></i> Confirm
+                    </button>
+
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

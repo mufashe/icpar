@@ -1,0 +1,49 @@
+{% extends 'icparsa/template/main.html' %}
+{% load crispy_forms_filters %}
+{% block content %}
+
+
+    <div class="row">
+        <div class="col-md">
+            <div class="card">
+                <div class="card-header">
+                    <h4 style="text-align: center">Configure New Department Member</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md">
+            <div class="card card-body" style="font-size: x-small">
+                <form method="post" action="">
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="form-group col-2">
+                            {{ departmentMemberForm.number|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-2">
+                            {{ departmentMemberForm.name|as_crispy_field }}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-2">
+                            {{ departmentMemberForm.department|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-2">
+                            {{ departmentMemberForm.email|as_crispy_field }}
+                        </div>
+                    </div>
+
+                    <br>
+                    <button type="submit" name="Send" class="btn btn-sm btn-info">
+                        <i class="bi bi-save-fill"></i> Save
+                    </button>
+                    <a href="/ldem/" class="btn btn-sm btn-info">
+                        <i class="fa-solid fa-list"></i> List
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

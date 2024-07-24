@@ -1,0 +1,50 @@
+{% extends 'icparsa/template/main.html' %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+    <div class="row">
+        <div class="col-md">
+            <div class="card">
+                <div class="card-header">
+                    <h4 style="font-size: smaller; text-align: center">Record New Title</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md">
+            <div class="card card-body" style="font-size: x-small">
+                <form method="post" action="" id="contractFormId"
+                      data-mebdep-url= {% url 'load_department_members_url' %}>
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="form-group col-2">
+                            {{ titleForm.number|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-2">
+                            {{ titleForm.name|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-2">
+                            {{ titleForm.company|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-2">
+                            {{ titleForm.department|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-2">
+                            {{ titleForm.unit|as_crispy_field }}
+                        </div>
+                    </div>
+                    <br>
+                    <input type="submit" name="Send" class="btn btn-sm btn-info">
+                    <a href="/cop/lt" class="btn btn-sm btn-info">
+                        <i class="fa-solid fa-list"></i> List
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

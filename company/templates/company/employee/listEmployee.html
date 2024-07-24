@@ -1,0 +1,119 @@
+{% extends 'icparsa/template/main.html' %}
+
+{% block content %}
+    <br/>
+    <div class="row">
+        <div class="col-md">
+            <div class="card">
+                <div class="card-header">
+                    <form>
+                        <div class="row">
+                            <div class="col-2 p-0">
+                                <a class="btn btn-outline-primary btn-sm p-1" href="/cop/cem">
+                                    <i class="fa fa-user-plus fa-align-left"></i>
+                                    Add Employee
+                                </a>
+                            </div>
+                            <div class="col-2 p-0">
+                                <a class="btn btn-outline-primary btn-sm p-1" href="/cop/dep">
+
+                                    Add Department
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col-md">
+            <div class="card card-body" style="font-size: x-small">
+                <table class="table table-striped table-bordered table-sm small " id="tbl">
+
+                    <tr>
+                        <th>No</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Birth Date</th>
+                        <th>Home Telephone</th>
+                        <th>Home Phone</th>
+                        <th>Email</th>
+                        <th>Address</th>
+                        <th>Department</th>
+                        <th>Title</th>
+                        <th>Hired Date</th>
+                        <th colspan="3">Action</th>
+                    </tr>
+                    {% for e in employeeList %}
+                        <tr>
+                            <td>{{ e.number }}</td>
+                            <td data-bs-toggle="collapse" role="button"
+                                data-bs-target="#employeeLeaveHistory{{ e.id }}"
+                                aria-controls="employeeLeaveHistory{{ e.id }}">{{ e.first_name }}
+                                {#                                <i class="bi bi-three-dots-vertical"></i>#}
+                                <i class="fa-solid fa-caret-down"></i>
+                            </td>
+                            <td>{{ e.last_name }}</td>
+                            <td>{{ e.birth_date }}</td>
+                            <td>{{ e.home_phone }}</td>
+                            <td>{{ e.mobile_phone }}</td>
+                            <td>{{ e.home_address }}</td>
+                            <td>{{ e.email }}</td>
+                            <td>{{ e.department }}</td>
+                            <td>{{ e.title }}</td>
+                            <td>{{ e.hire_date }}</td>
+                            <td><a href="{% url 'gl' e.id %}" class="btn btn-sm btn-outline-info"
+                                   style="font-size: xx-small">
+                                <i class="fa-solid fa-person-walking-arrow-right" style="font-size: xx-small"></i> Leave</a>
+                            </td>
+                            <td><a
+                                    style="font-size: xx-small" href="{% url 'upem' e.id %}"
+                                    class="btn btn-sm btn-warning">
+                                <i style="font-size: xx-small" class="fa-solid fa-pen-to-square"></i>
+                                Update</a></td>
+                            <td>
+                        </tr>
+                        <tr>
+                            <td colspan="100%" class="accordion-body collapse" id="employeeLeaveHistory{{ e.id }}">
+                                <table class="table table-striped table-bordered border-info table-sm small">
+                                    <thead class="thead-light">
+                                    <th>Number</th>
+                                    <th>Total Months</th>
+                                    <th>Total Leave_Days</th>
+                                    <th>Used Leave_Days</th>
+                                    <th>Left On</th>
+                                    <th>Back On</th>
+                                    <th>Previous Leave_Days</th>
+                                    <th colspan="4">Action</th>
+                                    </thead>
+                                    <tbody>
+                                    {% for el in e.leave_set.all %}
+                                        <tr>
+                                            <td>{{ el.number }}</td>
+                                            <td>{{ el.months_in_institution }}</td>
+                                            <td>{{ el.total_leave_days }}</td>
+                                            <td>{{ el.leave_days_used }}</td>
+                                            <td>{{ el.outDate }}</td>
+                                            <td>{{ el.inDate }}</td>
+                                            <td>{{ el.leave_days }}</td>
+                                            <td><a href="{% url 'loadleave' el.id %}">Generate</a> </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                            </td>
+
+                        </tr>
+
+
+                    {% endfor %}
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}

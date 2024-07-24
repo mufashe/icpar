@@ -1,0 +1,36 @@
+{% extends 'icparsa/template/main.html' %}
+{% load crispy_forms_filters %}
+{% block content %}
+    <form method="post" action="https://opensource.com/.">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 style="font-size: smaller; text-align: center">Send Expiration Notification</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md">
+                <div class="card card-body" style="font-size: x-small">
+                    <form method="post" action="">
+                        {% csrf_token %}
+
+                        <div class="form-row">
+                            <div class="form-group col-2">
+
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+        <br>
+        <button type="submit" class="btn btn-primary">Send</button>
+
+    </form>
+{% endblock %}

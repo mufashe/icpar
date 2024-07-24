@@ -1,0 +1,46 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+
+* {
+    font-family: "Poppins", sans-serif;
+}
+
+
+#logo {
+
+}
+
+body {
+    background-color: #ebeff5;
+}
+
+#total-contracts {
+    background-color: #4cb4c7;
+    font-size: xx-small;
+}
+
+#active-contracts {
+    background-color: #086f3f;
+}
+
+#pending-contracts {
+    background-color: #7CD1C0;
+}
+
+#canceled-contracts {
+    background-color: rgba(239, 49, 57, 0.97);
+}
+
+.card-title {
+
+}
+
+#signature {
+    padding: 0;
+    margin: 0;
+    border: 1px dotted #000;
+    width: 100%;
+    /* Set height as needed */
+    height: 300px; /* Example fixed height */
+    /* OR */
+    min-height: 200px; /* Example minimum height */
+}

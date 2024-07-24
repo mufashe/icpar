@@ -1,0 +1,40 @@
+{% extends 'icparsa/template/main.html' %}
+{% load crispy_forms_filters %}
+{% block content %}
+
+
+    <div class="row">
+        <div class="col-md">
+            <div class="card">
+                <div class="card-header">
+                    <h4 style="text-align: center">Configure New Second Party Type</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md">
+            <div class="card card-body" style="font-size: x-small">
+                <form method="post" action="">
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="form-group col-2">
+                            {{ secondPartyForm.number|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-2">
+                            {{ secondPartyForm.name|as_crispy_field }}
+                        </div>
+                    </div>
+
+                    <br>
+                    <button type="submit" name="Send" class="btn btn-sm btn-info">
+                        <i class="bi bi-save-fill"></i> Save
+                    </button>
+                    <a href="#" class="btn btn-sm btn-info">
+                        <i class="fa-solid fa-list"></i> List
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,129 @@
+{% extends 'icparsa/template/main.html' %}
+
+{% block content %}
+    {#    <br/>#}
+    {#    <div class="row">#}
+    {#        <div class="col-md">#}
+    {#            <div class="card">#}
+    {#                <div class="card-header">#}
+    {#                    <form>#}
+    {#                        <div class="row">#}
+    {#                            <div class="col-2 p-0">#}
+    {#                                <a class="btn btn-outline-primary btn-sm p-1" href="/lem/rl/">#}
+    {#                                    <i class="fa fa-user-plus fa-align-left"></i>#}
+    {#                                    Add New#}
+    {#                                </a>#}
+    {#                            </div>#}
+    {#                            <div class="col p-0" style="text-align: left">#}
+    {#                                <label class="p-0" for="fromDate">Star Date</label>#}
+    {#                            </div>#}
+    {#                            <div class="col p-0">#}
+    {#                                <input class="form-control form-control-sm col-2" type="date" id="fromDate" value="From"#}
+    {#                                       name="fromDate">#}
+    {#                            </div>#}
+    {#                            <div class="col p-0">#}
+    {#                                <label class="p-0" for="fromDate">End Date</label>#}
+    {#                            </div>#}
+    {#                            <div class="col p-0">#}
+    {#                                <input class="form-control form-control-sm col-2" type="date" id="toDate" value="To"#}
+    {#                                       name="toDate">#}
+    {#                            </div>#}
+    {#                            <div class="col p-0">#}
+    {#                                <a href="{% url 'srch' %}" class="btn btn-sm btn-outline-info" id="searchButton"#}
+    {#                                   style="margin-left:2%; margin-right:2%">#}
+    {#                                    <i class="fa fa-solid fa-search"></i> Filter</a>#}
+    {#                            </div>#}
+    {#                            <div class="col p-0">#}
+    {#                                <input type="text" class="form-control col-4 p-1" id="sicInput">#}
+    {#                            </div>#}
+    {#                            <div class="col p-0">#}
+    {#                                <a href="{% url 'sic' %}" class="btn btn-sm btn-outline-info" id="sicButton"#}
+    {#                                   style="margin-left:2%; margin-right:2%">#}
+    {#                                    <i class="fa-brands fa-searchengin"></i> Search</a>#}
+    {#                            </div>#}
+    {##}
+    {#                        </div>#}
+    {#                    </form>#}
+    {#                </div>#}
+    {#            </div>#}
+    {#        </div>#}
+    {#    </div>#}
+    <br/>
+    <div class="row">
+        <div class="col-md">
+            <div class="card card-body" style="font-size: x-small">
+                <table class="table table-striped table-bordered table-sm small " id="tbl">
+
+                    <tr>
+                        <th>No</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Created on</th>
+                        <th>Last Login</th>
+
+                        <th colspan="4">Action
+                        </th>
+                    </tr>
+                    {% for u in users %}
+
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ u.first_name }}</td>
+                            <td>{{ u.last_name }}</td>
+                            <td>{{ u.username }}</td>
+                            <td>{{ u.email }}</td>
+                            <td>{{ u.date_joined }}</td>
+                            <td>{{ u.last_login }}</td>
+
+                            <td><a
+                                    style="font-size: smaller" href="#"
+                                    class="btn btn-sm btn-warning">
+                                <i style="font-size: xx-small" class="fa-solid fa-pen-to-square"></i>
+                                Update</a></td>
+                            <td><a
+                                    style="font-size: smaller" href="#"
+                                    class="btn btn-sm btn-danger">
+                                <i style="font-size: xx-small" class="fa-solid fa-trash-can"></i>
+                                Delete</a>
+                            </td>
+                            <td><a style="font-size: smaller" href="{% url 'syem' u.id %}"
+                                   class="btn btn-success btn-sm">
+                                <i style="font-size: xx-small" class="fa-solid fa-user"></i>
+                                Employee</a>
+                            </td>
+                        </tr>
+
+
+
+                    {% endfor %}
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+    <br>
+    <div class="row mb-8">
+        {#        fixed-bottom#}
+        <div class="col-md float-right">
+            <div class="card">
+                <div class="card-header">
+                    <form>
+                        <div class="row">
+                            <div class="col-2 p-0">
+                                <a class="btn btn-sm btn-info" href="/excon/">Extract
+                                    <i class="fa-solid fa-file-export"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+{% endblock %}

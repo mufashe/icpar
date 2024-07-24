@@ -1,0 +1,332 @@
+{% extends 'icparsa/template/main.html' %}
+{% block content %}
+    <br/>
+    <div class="row">
+        <div class="col-md">
+            <div class="card">
+                <div class="card-header">
+                    <form>
+                        <div class="row">
+                            <div class="col-2 p-0">
+                                <a class="btn btn-outline-primary btn-sm p-1" href="/con/">
+                                    <i class="fa fa-user-plus fa-align-left"></i>
+                                    Add New
+                                </a>
+                            </div>
+                            <div class="col p-0" style="text-align: left">
+                                <label class="p-0" for="fromDate">Star Date</label>
+                            </div>
+                            <div class="col p-0">
+                                <input class="form-control form-control-sm col-2" type="date" id="fromDate" value="From"
+                                       name="fromDate">
+                            </div>
+                            <div class="col p-0">
+                                <label class="p-0" for="fromDate">End Date</label>
+                            </div>
+                            <div class="col p-0">
+                                <input class="form-control form-control-sm col-2" type="date" id="toDate" value="To"
+                                       name="toDate">
+                            </div>
+                            <div class="col p-0">
+                                <a href="{% url 'srch' %}" class="btn btn-sm btn-outline-info" id="searchButton"
+                                   style="margin-left:2%; margin-right:2%">
+                                    <i class="fa fa-solid fa-search"></i> Filter</a>
+                            </div>
+                            <div class="col p-0">
+                                <input type="text" class="form-control col-4 p-1" id="sicInput">
+                            </div>
+                            <div class="col p-0">
+                                <a href="{% url 'sic' %}" class="btn btn-sm btn-outline-info" id="sicButton"
+                                   style="margin-left:2%; margin-right:2%">
+                                    <i class="fa-brands fa-searchengin"></i> Search</a>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {#    {% for message in messages %}#}
+    {#        <div class="alert alert-{{ message.tags }}">#}
+    {#            {{ message }}#}
+    {#        </div>#}
+    {#    {% endfor %}#}
+
+    {% if messages %}
+        {% for message in messages %}
+            <script>
+                $(document).ready(function () {
+
+                    $("#messageText").text("{{ message }}");
+                    $("#messageModal").modal('show')
+
+                });
+            </script>
+        {% endfor %}
+    {% endif %}
+
+    <div class="modal" tabindex="-1" role="dialog" id="messageModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        Message
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <p id="messageText"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <br/>
+    <div class="row">
+        <div class="col-md">
+            <div class="card card-body" style="font-size: x-small">
+                <div class="contract-container" style="height: 450px; overflow: auto;">
+                    <table class="table table-hover table-bordered table-sm small " id="tbl">
+                        <thead class="thead-light">
+                        <tr>
+                            <th>No</th>
+                            <th>Record Date</th>
+                            <th>Name</th>
+                            <th>Category</th>
+                            <th>Type</th>
+                            <th>Unit</th>
+                            <th>Unit_Mail</th>
+                            <th>Status</th>
+                            <th>Company</th>
+                            <th>Signed Date</th>
+                            <th>Expires</th>
+                            <th>Days Left</th>
+                            {% if loggedInUser in admins %}
+                                <th>Notification counter</th>{% endif %}
+                            {% if loggedInUser in admins %}
+                                <th>Last Notification Date</th>{% endif %}
+                            {% if loggedInUser in admins %}
+                                <th>Notification Interval</th>
+                            {% endif %}
+
+
+                            <th>Renewal Times</th>
+
+                            <th>More details</th>
+                            {#                        <th colspan="3"  {% if loggedInUser not in admins %} style="display: none"{% endif %}>Action#}
+                            {#                        </th>#}
+                            <th colspan="5">Action
+                                <i class="fa-solid fa-caret-down"></i>
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for c in contractsList %}
+
+                            <tr  {% if c.days_left < 0 %} style="background-color: #f2dede;"{% endif %}
+                                                          class="accordion-toggle">
+
+                                <td>{{ c.number }}</td>
+                                <td>{{ c.date_created }}</td>
+                                <td>{{ c.name }}</td>
+                                <td>{{ c.contractCategory }}</td>
+                                <td>{{ c.contractType }}</td>
+                                <td>{{ c.departmentUnit }}</td>
+                                <td>{{ c.departmentUnit.email }}</td>
+                                <td>{{ c.contract_status }}</td>
+                                <td>{{ c.secondParty }}</td>
+                                <td>{{ c.signedDate |date:"SHORT_DATE_FORMAT" }}</td>
+                                <td>{{ c.expirationDate |date:"SHORT_DATE_FORMAT" }}</td>
+                                <td>{{ c.days_left }}</td>
+                                {% if loggedInUser in admins %}
+                                    <td>{{ c.notificationRemindingTimes }}</td>{% endif %}
+                                {% if loggedInUser in admins %}
+                                    <td>{{ c.notificationSentOn }}</td>{% endif %}
+                                {% if loggedInUser in admins %}
+                                    <td>{{ c.notificationWaitingInterval }}</td> {% endif %}
+                                {% if c.conHist > 0 %}
+                                    <td data-bs-toggle="collapse" role="button" data-bs-target="#histable{{ c.id }}"
+                                        aria-controls="histable{{ c.id }}" title="Click here for more details">
+                                        {{ c.conHist }} <i class="fa fa-info-circle text-success ms-3"></i></td>
+                                {% else %}
+                                    <td>
+                                        {{ c.conHist }}</td>
+                                {% endif %}
+
+                                <td>{{ c.description }}</td>
+                                <td>
+                                    <div class="dropdown">
+                                        <button class="btn btn-sm btn-default dropdown-toggle" type="button"
+                                                data-bs-toggle="dropdown"
+                                                aria-expanded="false" style="font-size: xx-small"> More
+                                        </button>
+                                        <div class="dropdown-menu" style="padding: .5rem 1rem;">
+                                            <a {% if c.days_left < 0 %}
+                                                class="btn btn-sm btn-warning disabled"{% else %}
+                                                class="btn btn-sm btn-warning"
+                                            {% endif %}
+                                                style="font-size: xx-small"
+                                                href="{% url 'upcon' c.id %}">
+                                                <i style="font-size: xx-small" class="fa-solid fa-pen-to-square"></i>
+                                                Update
+                                            </a>
+                                            {% if loggedInUser in admins %}
+                                                <a{% if c.days_left < 0 %}
+                                                    class="btn btn-sm btn-danger disabled" {% else %}
+                                                    class="btn btn-sm btn-danger"  {% endif %}
+                                                    style="font-size: xx-small"
+                                                    href="{% url 'delCo' c.id %}">
+                                                    <i style="font-size: xx-small" class="fa-solid fa-trash-can"></i>
+                                                    Delete
+                                                </a>
+                                            {% endif %}
+
+                                            {% if c.contract_status == 'SIGNED' %}
+                                                <a {% if c.days_left < 0 %}
+                                                    class="btn btn-sm btn-danger disabled" {% else %}
+                                                    class="btn btn-sm btn-danger"  {% endif %}
+                                                    class="btn btn-sm btn-outline-warning" style="font-size:xx-small"
+                                                    href="{% url 'upStat' c.id %}">
+                                                    <i style="font-size: xx-small" class="fa-solid fa-xmark"></i>CANCEL
+                                                </a>
+                                            {% else %}
+                                                <a {% if c.days_left < 0 %}
+                                                    class="btn btn-sm btn-info disabled" {% else %}
+                                                    class="btn btn-sm btn-info"  {% endif %}
+                                                    class="btn btn-sm btn-info" style="font-size: xx-small"
+                                                    href="{% url 'upStat' c.id %}">
+                                                    <i style="font-size: smaller" class="fa-solid fa-signature"></i>SIGNED
+                                                </a>
+                                            {% endif %}
+
+                                            {% if loggedInUser in admins or loggedInUser in procurementManager %}
+                                                <a{% if c.days_left > 0 %}
+                                                    class="btn btn-sm btn-success disabled" {% else %}
+                                                    class="btn btn-sm btn-success"  {% endif %}
+                                                    style="font-size: xx-small"
+                                                    href="{% url 'renewCon' c.id %}">
+                                                    <i style="font-size: xx-small"
+                                                       class="fa-solid fa-file-signature"></i>
+                                                    Renew</a>
+                                            {% endif %}
+
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="100%" class="accordion-body collapse" id="histable{{ c.id }}">
+                                    <table class="table table-striped table-bordered border-info table-sm small">
+                                        <thead class="thead-light">
+                                        <th>Signed Date</th>
+                                        <th>Expiration Date</th>
+                                        <th>Renewed Date</th>
+                                        <th>Renewal Counter</th>
+                                        </thead>
+                                        <tbody>
+                                        {% for h in c.contracthistory_set.all %}
+                                            <tr>
+                                                {#                                                {% if forloop.first %}#}
+                                                {#                                                    <td rowspan="100%"><span class="m-3">{{ h.signedDate }}</span></td>#}
+                                                {#                                                {% endif %}#}
+                                                <td>{{ h.renewDate }}</td>
+                                                <td>{{ h.expirationDate }}</td>
+                                                <td>{{ h.signedDate }}</td>
+                                                <td>{{ h.renewalCounter }}</td>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <br>
+    <div class="row mb-8">
+        {#        fixed-bottom#}
+        <div class="col-md float-right">
+            <div class="card">
+                <div class="card-header">
+                    <form>
+                        <div class="row">
+                            <div class="col-2 p-0">
+                                <a class="btn btn-sm btn-info" href="/excon/">Extract
+                                    <i class="fa-solid fa-file-export"></i>
+                                </a>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("#searchButton").on("click", function (event) {
+                event.preventDefault();
+                const fromDate = $("#fromDate").val();
+                const toDate = $("#toDate").val();
+                $.ajax({
+                    url: "{% url 'srch' %}",
+                    method: 'GET',
+                    data: {
+                        'fromDate': fromDate,
+                        'toDate': toDate
+                    },
+                    success: function (data) {
+                        $('body').html(data)
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        console.log(textStatus, errorThrown)
+                    }
+                });
+
+            });
+        });
+
+    </script>
+    <script>
+        $(function () {
+            $("#sicButton").on("click", function (event) {
+                event.preventDefault();
+                let shaka = $('#sicInput').val();
+                $.ajax({
+                    url: '{% url 'sic' %}',
+                    method: 'GET',
+                    data: {
+                        'shaka': shaka
+                    },
+                    success: function (data) {
+                        $('body').html(data)
+                        $('#sicInput').val(shaka)
+                    }
+                });
+
+            });
+
+        });
+    </script>
+
+{% endblock %}

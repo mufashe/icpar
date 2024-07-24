@@ -1,0 +1,65 @@
+{% extends 'icparsa/template/main.html' %}
+
+{% block content %}
+    <br/>
+    <div class="row">
+        <div class="col-md">
+            <div class="card">
+                <div class="card-header">
+                    <form>
+                        <div class="row">
+                            <div class="col-2 p-0">
+                                <a class="btn btn-outline-primary btn-sm p-1" href="/cop/dep"
+                                   style="font-size: smaller">
+                                    <i class="fa fa-user-plus fa-align-left"></i>
+                                    Add Department
+                                </a>
+                            </div>
+                            <div class="col-2 p-0">
+                                <a class="btn btn-outline-primary btn-sm p-1" href="/cop/lun"
+                                   style="font-size: smaller">
+                                    <i class="fa-solid fa-code-branch"></i>
+                                    Add Unit
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col-md">
+            <div class="card card-body" style="font-size: x-small">
+                <table class="table table-striped table-bordered table-sm small " id="tbl">
+
+                    <tr>
+                        <th>No</th>
+                        <th>Name</th>
+                        <th>Company</th>
+                        <th>Email</th>
+                        <th colspan="3">Action</th>
+                    </tr>
+                    {% for t in listDepartment %}
+                        <tr>
+                            <td>{{ t.number }}</td>
+                            <td>{{ t.name }}</td>
+                            <td>{{ t.company }}</td>
+                            <td>{{ t.email }}</td>
+                            <td><a class="btn btn-sm btn-warning" href="{% url 'upde' t.id %}"
+                                   style="font-size: smaller">Update</a></td>
+                            <td><a class="btn btn-sm btn-danger" href="{% url 'deld' t.id %}"
+                                   style="font-size: smaller">Delete</a></td>
+                        </tr>
+
+
+                    {% endfor %}
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+
+{% endblock %}

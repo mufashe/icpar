@@ -1,0 +1,88 @@
+{% extends 'icparsa/template/main.html' %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+
+    <div class="row">
+        <div class="col-md">
+            <div class="card">
+                <div class="card-header">
+                    <h4 style="font-size: smaller; text-align: center">Record Correspondence</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md">
+            <div class="card card-body" style="font-size: x-small">
+                <form method="post" action="" id="correFormId"
+                      data-corrdep-url= {% url 'loadDepartmentUnit' %}>
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="form-group col-2">
+                            {{ corresForm.number|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-2">
+                            {{ corresForm.date|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-2">
+                            {{ corresForm.reference_number|as_crispy_field }}
+                        </div>
+
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-2">
+                            {{ corresForm.correspondence_type|as_crispy_field }}
+                        </div>
+
+                        <div class="form-group col-2">
+                            {{ corresForm.department|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-2">
+                            {{ corresForm.unit|as_crispy_field }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-2">
+                            {{ corresForm.responsible|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-2">
+                            {{ corresForm.organisation|as_crispy_field }}
+                        </div>
+                        <div class="form-group col-2">
+                            {{ corresForm.subject|as_crispy_field }}
+                        </div>
+                    </div>
+                    <br>
+                    <input type="submit" name="Send" class="btn btn-sm btn-info">
+                    <a href="/cor/lic/" class="btn btn-sm btn-info">
+                        <i class="fa-solid fa-list"></i> List
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+
+        $("#id_department").on("change", function () {
+            const url = $("#correFormId").attr("data-corrdep-url");
+            const departmentId = $(this).val();
+            $.ajax({
+                url: url,
+                data: {'department_id': departmentId},
+                success: function (data) {
+                    console.log(data);
+                    $("#id_unit").html(data)
+                }
+            });
+        });
+
+    </script>
+
+
+{% endblock %}

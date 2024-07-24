@@ -1,0 +1,24 @@
+<div>
+    <canvas id="signature-pad" class="signature-pad" width=400 height=200></canvas>
+    <button type="button" id="clear-signature">Clear</button>
+    <input type="hidden" name="{{ name }}" id="{{ name }}_input">
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var canvas = document.getElementById("signature-pad");
+        var clearButton = document.getElementById("clear-signature");
+        var hiddenInput = document.getElementById("{{ name }}_input");
+        var signaturePad = new SignaturePad(canvas);
+
+        clearButton.addEventListener("click", function() {
+            signaturePad.clear();
+            hiddenInput.value = '';
+        });
+
+        document.querySelector('form').addEventListener('submit', function() {
+            if (!signaturePad.isEmpty()) {
+                hiddenInput.value = signaturePad.toDataURL();
+            }
+        });
+    });
+</script>

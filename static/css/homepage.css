@@ -1,0 +1,295 @@
+/* Import Google font - Poppins */
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap");
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+}
+
+.navbar {
+    margin-bottom: 0;
+    border-radius: 0;
+}
+
+.sidebar {
+    position: fixed;
+    height: 100%;
+    width: 260px;
+    background: #11101d;
+    padding: 15px;
+    z-index: 99;
+}
+
+.logo {
+    font-size: 25px;
+    padding: 0 15px;
+    text-transform: capitalize;
+}
+
+.sidebar a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.menu-content {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    margin-top: 40px;
+    overflow-y: scroll;
+}
+
+.menu-content::-webkit-scrollbar {
+    display: none;
+}
+
+.menu-items {
+    height: 100%;
+    width: 100%;
+    list-style: none;
+    transition: all 0.4s ease;
+}
+
+.menu-items i {
+    padding: 5px;
+}
+
+.submenu-active .menu-items {
+    transform: translateX(-56%);
+}
+
+.menu-title {
+    color: #fff;
+    font-size: 14px;
+    padding: 15px 20px;
+}
+
+.item a,
+.submenu-item {
+    padding: 16px;
+    display: inline-block;
+    width: 100%;
+    border-radius: 12px;
+}
+
+.item i {
+    font-size: 12px;
+}
+
+.item a:hover,
+.submenu-item:hover,
+.submenu .menu-title:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.submenu-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #fff;
+    cursor: pointer;
+}
+
+.submenu {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    right: calc(-100% - 26px);
+    /*height: calc(100% + 100vh);*/
+    background: #11101d;
+    display: none;
+}
+
+.show-submenu ~ .submenu {
+    display: block;
+}
+
+.submenu .menu-title {
+    border-radius: 12px;
+    cursor: pointer;
+}
+
+.submenu .menu-title i {
+    margin-right: 10px;
+}
+
+.navbar,
+.main {
+    left: 260px;
+    width: calc(100% - 260px);
+    transition: all 0.5s ease;
+    z-index: 1000;
+}
+
+.sidebar.close ~ .navbar,
+.sidebar.close ~ .main {
+    left: 0;
+    width: 100%;
+}
+
+.navbar {
+    top: 0;
+    position: sticky;
+    color: #fff;
+    padding: 15px 20px;
+    font-size: 25px;
+    background: #4070f4;
+    cursor: pointer;
+}
+
+.navbar #sidebar-close {
+    cursor: pointer;
+}
+
+.main {
+    position: relative;
+    display: flex;
+    /*align-items: center;*/
+    justify-content: center;
+    /*height: 96vh;*/
+    height: auto;
+    z-index: 100;
+    background: #e7f2fd;
+    /*overflow-y: auto;*/
+}
+
+/*.main h1 {*/
+/*    color: #11101d;*/
+/*    font-size: 40px;*/
+/*    text-align: center;*/
+/*}*/
+.opd {
+    width: auto;
+    margin: auto 5px;
+    overflow-x: auto;
+    font-size: x-small
+}
+
+.opdl {
+    padding-top: 5px;
+    margin: 5px 3px 3px;
+}
+
+
+.btn-label {
+    position: relative;
+    left: -12px;
+    display: inline-block;
+    padding: 6px 12px;
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 3px 0 0 3px;
+}
+
+.btn-labeled {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.btn {
+    margin-bottom: 10px;
+}
+
+.cont {
+    background: #f4fcff;
+    overflow-y: auto;
+}
+
+.scroll {
+    max-height: 560px;
+    overflow-y: auto;
+}
+
+.table {
+    margin-top: 0;
+    padding: 0;
+
+}
+
+#tbl {
+    font-size: xx-small;
+    text-align: center;
+}
+
+#ocos {
+    background: #c2e5eb;
+
+}
+
+#statsModalContent {
+    width: 35%;
+    height: auto;
+    right: 0;
+    bottom: 0;
+}
+
+#pieChart {
+
+    /*width: 400px;*/
+    /*height: 200px;*/
+    /*padding: 5px;*/
+    /*margin: 5px;*/
+}
+
+.rotate-text {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+}
+
+fieldset.scheduler-border.border-warning {
+    border: 1px groove #ddd !important;
+    padding: 0 1.4em 1.4em 1.4em !important;
+    margin: 0 0 1.5em 0 !important;
+    -webkit-box-shadow: 0px 0px 0px 0px #000;
+    box-shadow: 0px 0px 0px 0px #000;
+}
+
+legend.scheduler-border.border-warning {
+    width: inherit; /* Or auto */
+    padding: 0 10px; /* To give a bit of padding on the left and right */
+    border-bottom: none;
+}
+
+
+/*************************************************************New***********************************************************/
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 30%; /* Full width */
+    height: 80%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0); /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+    position: relative;
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%;
+}
+
+/* The Close Button */
+.close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}

@@ -1,0 +1,83 @@
+{% extends 'icparsa/template/main.html' %}
+
+{% block content %}
+
+    <br>
+    <div class="row">
+        <div class="col-md">
+            <div class="card">
+                <div class="card-header">
+                    <form>
+                        <div class="row">
+                            <div class="col-2 p-0">
+                                <a class="btn btn-info btn-sm" href="/inst/">
+                                    <i class="fa-regular fa-building"></i>
+                                    Add New</a>
+                            </div>
+                            <div class="col p-0">
+                                <input type="text" class="form-control col-4 p-1" id="schInput"
+                                       placeholder="Enter company name">
+                            </div>
+                            <div class="col p-0">
+                                <a href="{% url 'schin' %}" class="btn btn-sm btn-outline-info" id="schinButton"
+                                   style="margin-left:2%; margin-right:2%">
+                                    <i class="fa fa-solid fa-search"></i> Search</a>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <br/>
+    <div class="row">
+        <div class="col-md">
+            <div class="card card-body" style="font-size: x-small">
+                <table class="table table-striped table-bordered table-sm small " id="tbl">
+
+                    <tr>
+                        <th>Date</th>
+                        <th>Number</th>
+                        <th>Name</th>
+                        <th colspan="2">ACTION</th>
+                    </tr>
+                    {% for i in institutionsList %}
+                        <tr>
+                            <td>{{ i.date_created }}</td>
+                            <td>{{ i.number }}</td>
+                            <td>{{ i.name }}</td>
+                            <td><a class="btn btn-sm btn-info" href="{% url 'upins' i.id %}"><i
+                                    class="bi bi-pen-fill"></i>Update</a>
+                            </td>
+                            <td><a class="btn btn-sm btn-danger" href="{% url 'delinst' i.id %}"><i
+                                    class="bi bi-trash"></i>Delete</a></td>
+                        </tr>
+
+                    {% endfor %}
+
+                </table>
+            </div>
+
+        </div>
+    </div>
+    <script>
+        $(function () {
+            $("#schinButton").on("click", function (event) {
+                event.preventDefault();
+                let shaka = $('#schInput').val();
+                $.ajax({
+                    url: '{% url 'schin' %}',
+                    method: 'GET',
+                    data: {
+                        'shaka': shaka
+                    },
+                    success: function (data) {
+                        $('body').html(data)
+                        $('#schInput').val(shaka)
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

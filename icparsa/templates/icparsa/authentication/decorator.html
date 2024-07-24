@@ -1,0 +1,20 @@
+{% extends 'icparsa/template/main.html' %}
+{% load static %}
+{% block content %}
+    <br>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card card-body">
+                <p><i class="fa-solid fa-circle-exclamation"></i> You are not authorized to view this page</p>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <a class="btn btn-info" href="{% url 'home' %}">
+                        <i class="fa-solid fa-backward"></i>
+                        Back</a>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
