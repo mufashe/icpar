@@ -1,6 +1,7 @@
 from django.db import models
 
 from company.models import Title, Department
+from .umumaro import Umumaro
 
 
 class CompanyEmployee(models.Model):
@@ -17,6 +18,10 @@ class CompanyEmployee(models.Model):
     title = models.ForeignKey(Title, on_delete=models.SET_NULL, blank=True, null=True)
     department = models.ForeignKey(Department, on_delete=models.SET_NULL, blank=True, null=True)
     email = models.EmailField(max_length=254, null=True, blank=True)
+    role = models.ForeignKey(Umumaro, on_delete=models.SET_NULL, null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.first_name} {self.last_name}"
 
     # months_in_institution = models.IntegerField(null=True, blank=True)
     # total_leave_days = models.IntegerField(null=True, blank=True)

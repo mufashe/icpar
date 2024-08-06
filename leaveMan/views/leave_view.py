@@ -28,6 +28,7 @@ from icparsa.decorators import allowed_users
 from leaveMan.forms.leaveForm import LeaveForm
 from leaveMan.forms.signaturePasswordForm import SignaturePasswordForm
 from leaveMan.models import Leave, LeaveDecision
+from io import BytesIO
 
 
 @login_required(login_url='log')
@@ -229,7 +230,7 @@ def publicHolidaysAPICaller(request, country, year):
 
 
 pdfmetrics.registerFont(
-    TTFont('Tahoma', 'D:/Projects/ICPAR/icpars/static/fonts/tahoma.ttf'))  # Replace with actual path
+    TTFont('Tahoma', 'D:/Projects/ICPAR/icpars/static/fonts/tahoma.ttf'))
 
 
 def generateLeave(request, pk):

@@ -14,4 +14,3 @@ class LeaveDecision(models.Model):
 
     def __str__(self):
         return f"Decision for leave of {self.leave.employee.first_name} ({self.decisionStatus})"
-

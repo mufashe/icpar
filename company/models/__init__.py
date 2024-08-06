@@ -4,3 +4,4 @@ from .title import Title
 from .companyEmployee import CompanyEmployee
 from .unit import Unit
 from .employeeAsUserSignature import *
+from .umumaro import *
