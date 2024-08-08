@@ -105,7 +105,7 @@ def updateLeaveStatus(request, pk):
             existingLeaveDecision.signature = userSignature
             existingLeaveDecision.save()
 
-        if not existingLeaveDecision:
+        else:
             newDecision = LeaveDecision.objects.create(
                 leave=leave,
                 requestingEmployee=leave.employee,
@@ -114,6 +114,35 @@ def updateLeaveStatus(request, pk):
                 signature=userSignature,
             )
             newDecision.save()
+        if 'Manager' not in leave.employee.title.name and 'Director' not in leave.employee.title.name:
+            manager = get_object_or_404(CompanyEmployee, department=leave.employee.department, title__name='Manager')
+            director = get_object_or_404(CompanyEmployee, department=leave.employee.department, title__name='Director')
+            managerSignature = get_object_or_404(EmployeeAsUserSignature, employee=manager)
+            directorSignature = get_object_or_404(EmployeeAsUserSignature, employee=director)
+
+            LeaveDecision.objects.get_or_create(
+                leave=leave,
+                requestingEmployee=leave.employee,
+                approvingEmployee=request.user,
+                defaults={'decisionStatus': 'PENDING', 'signature': managerSignature}
+            )
+
+            LeaveDecision.objects.get_or_create(
+                leave=leave,
+                requestingEmployee=leave.employee,
+                approvingEmployee=request.user,
+                defaults={'decisionStatus': 'PENDING', 'signature': directorSignature}
+            )
+        elif 'Manager' in leave.employee.title.name:
+            director = get_object_or_404(CompanyEmployee, department=leave.employee.department, title__name='Director')
+            directorSignature = get_object_or_404(EmployeeAsUserSignature, employee=director)
+
+            LeaveDecision.objects.get_or_create(
+                leave=leave,
+                requestingEmployee=leave.employee,
+                approvingEmployee=request.user,
+                defaults={'decisionStatus': 'PENDING', 'signature': directorSignature}
+            )
 
         return JsonResponse({'success': True, 'new_status': leave.leave_status})
     else:
@@ -148,6 +177,53 @@ def give_leave(request, pk):
                 messages.error(request, 'Department allow only one employee at time')
                 return redirect('lem')
             leave.save()
+
+            userSignature = get_object_or_404(EmployeeAsUserSignature, employee=request.user)
+            LeaveDecision.objects.create(
+                leave=leave,
+                requestingEmployee=leave.employee,
+                approvingEmployee=request.user,
+                decisionStatus='PENDING',
+                signature=userSignature
+            )
+
+            if 'Manager' not in emp.title.name and 'Director' not in emp.title.name:
+                manager = get_object_or_404(CompanyEmployee, department=emp.department,
+                                            title__name__icontains='Manager')
+                director = get_object_or_404(CompanyEmployee, department=emp.department,
+                                             title__name__icontains='Director')
+                managerSignature = get_object_or_404(EmployeeAsUserSignature, employee=manager)
+                directorSignature = get_object_or_404(EmployeeAsUserSignature, employee=director)
+
+                LeaveDecision.objects.create(
+                    leave=leave,
+                    requestingEmployee=emp,
+                    approvingEmployee=request.user,
+                    decisionStatus='REQUESTING',
+                    signature=managerSignature,
+
+                )
+
+                LeaveDecision.objects.create(
+                    leave=leave,
+                    requestingEmployee=emp,
+                    approvingEmployee=request.user,
+                    decisionStatus='PENDING',
+                    signature=directorSignature
+                )
+            elif emp.title == 'Manager':
+                director = get_object_or_404(CompanyEmployee, department=emp.department,
+                                             title__name__icontains='Director')
+                directorSignature = get_object_or_404(EmployeeAsUserSignature, employee=director)
+
+                LeaveDecision.objects.create(
+                    leave=leave,
+                    requestingEmployee=emp,
+                    approvingEmployee=request.user,
+                    decisionStatus='REQUESTING',
+                    signature=directorSignature
+                )
+
             messages.success(request, 'Leave Request Sent Please wait for Approval')
             # return redirect('lem')
         else:
