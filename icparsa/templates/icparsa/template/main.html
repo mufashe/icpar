@@ -52,13 +52,13 @@
                             </ul>
                         </li>
                     {% endif %}
-{#                    <li>#}
+                    {#                    <li>#}
                     {#                        <a href="{% url 'gl' pk=employee.pk %}" class="nav-link px-0 align-middle">#}
                     {#                            <i class="fa-solid fa-person-walking-arrow-right"></i>#}
                     {#                            <span class="ms-1 d-none d-sm-inline">Take a Leave</span>#}
                     {#                        </a>#}
                     {#                    </li>#}
-                    {% if  request.user in leaveManager or request.user in admins %}
+                    {% if  request.user in leaveManager or request.user in admins or request.user in end_users %}
                         <li>
                             <a href="#submenu01" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
                                 <i class="fa-solid fa-person-walking-arrow-right"></i>

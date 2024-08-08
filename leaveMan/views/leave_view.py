@@ -150,7 +150,7 @@ def updateLeaveStatus(request, pk):
 
 
 @login_required(login_url='log')
-# @allowed_users(allowed_roles=['admin', 'leaveManager'])
+@allowed_users(allowed_roles=['admin', 'leaveManager', 'end_user'])
 def give_leave(request, pk):
     emp = get_object_or_404(CompanyEmployee, id=pk)
     next_number = Leave.objects.all().count() + 1
