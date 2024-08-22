@@ -47,7 +47,7 @@ def recordLeave(request):
 
 
 @login_required(login_url='log')
-@allowed_users(allowed_roles=['admin', 'leaveManager'])
+@allowed_users(allowed_roles=['admin', 'leaveManager', 'director', 'manager'])
 def listLeave(request):
     leaveDecisionMakersGroup = Q(groups__name='leaveDecisionMakers')
     adminsGroup = Q(groups__name='admin')
@@ -56,9 +56,19 @@ def listLeave(request):
 
     leaveDecisions = {ld.leave.id: ld.decisionStatus for ld in
                       LeaveDecision.objects.filter(approvingEmployee=request.user)}
+    user_role = request.user.groups.first().name
+    user_employee = CompanyEmployee.objects.get(email=request.user.email)
 
-    # leaveList = Leave.objects.filter(id__in=leaveDecisions.keys())
-    leaveList = Leave.objects.all()
+    if user_role == 'admin':
+        # leaveList = Leave.objects.filter(id__in=leaveDecisions.keys())
+        leaveList = Leave.objects.all()
+    elif user_role == 'director':
+        leaveList = Leave.objects.filter(employee__department=user_employee.department)
+    elif user_role == 'manager':
+        leaveList = Leave.objects.filter(employee__title__unit=user_employee.title.unit)
+
+    else:
+        leaveList = Leave.objects.none()
 
     context = {'leaveList': leaveList, 'leaveDecisionMakersMember': leaveDecisionMakersMember,
                'adminsGroupMember': adminsGroupMember, 'leaveDecisions': leaveDecisions}
@@ -183,7 +193,7 @@ def give_leave(request, pk):
                 leave=leave,
                 requestingEmployee=leave.employee,
                 approvingEmployee=request.user,
-                decisionStatus='PENDING',
+                decisionStatus='REQUESTING',
                 signature=userSignature
             )
 
@@ -208,7 +218,7 @@ def give_leave(request, pk):
                     leave=leave,
                     requestingEmployee=emp,
                     approvingEmployee=request.user,
-                    decisionStatus='PENDING',
+                    decisionStatus='REQUESTING',
                     signature=directorSignature
                 )
             elif emp.title == 'Manager':
