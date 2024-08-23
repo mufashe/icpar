@@ -61,11 +61,11 @@ def listLeave(request):
 
     if user_role == 'admin':
         # leaveList = Leave.objects.filter(id__in=leaveDecisions.keys())
-        leaveList = Leave.objects.all()
+        leaveList = Leave.objects.all().order_by('number')
     elif user_role == 'director':
-        leaveList = Leave.objects.filter(employee__department=user_employee.department)
+        leaveList = Leave.objects.filter(employee__department=user_employee.department).order_by('number')
     elif user_role == 'manager':
-        leaveList = Leave.objects.filter(employee__title__unit=user_employee.title.unit)
+        leaveList = Leave.objects.filter(employee__title__unit=user_employee.title.unit).order_by('number')
 
     else:
         leaveList = Leave.objects.none()
