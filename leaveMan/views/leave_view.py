@@ -10,6 +10,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth.models import User
+from django.db import models
 from django.db.models import Sum, Q
 from django.http import JsonResponse, FileResponse
 from django.shortcuts import render, redirect, get_object_or_404
@@ -57,15 +58,24 @@ def listLeave(request):
     leaveDecisions = {ld.leave.id: ld.decisionStatus for ld in
                       LeaveDecision.objects.filter(approvingEmployee=request.user)}
     user_role = request.user.groups.first().name
+
     user_employee = CompanyEmployee.objects.get(email=request.user.email)
 
-    if user_role == 'admin':
-        # leaveList = Leave.objects.filter(id__in=leaveDecisions.keys())
+    employee_title = user_employee.title.name.lower() if user_employee.title else ''
+
+    if 'manager' in employee_title:
+        leaveList = Leave.objects.filter(
+            models.Q(employee__title__unit=user_employee.title.unit) |
+            models.Q(employee__title__name__icontains='manager',
+                     employee__department=user_employee.department)).order_by('number')
+
+    elif 'director' in employee_title:
+        leaveList = Leave.objects.filter(
+            Q(employee__department=user_employee.department) |
+            Q(employee__title__name__icontains='director')).order_by('number')
+
+    elif 'ceo' in employee_title:
         leaveList = Leave.objects.all().order_by('number')
-    elif user_role == 'director':
-        leaveList = Leave.objects.filter(employee__department=user_employee.department).order_by('number')
-    elif user_role == 'manager':
-        leaveList = Leave.objects.filter(employee__title__unit=user_employee.title.unit).order_by('number')
 
     else:
         leaveList = Leave.objects.none()
