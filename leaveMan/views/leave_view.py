@@ -125,8 +125,10 @@ def updateLeaveStatus(request, pk):
             )
             newDecision.save()
         if 'Manager' not in leave.employee.title.name and 'Director' not in leave.employee.title.name:
-            manager = get_object_or_404(CompanyEmployee, department=leave.employee.department, title__name='Manager')
-            director = get_object_or_404(CompanyEmployee, department=leave.employee.department, title__name='Director')
+            manager = get_object_or_404(CompanyEmployee, department=leave.employee.department,
+                                        title__name__icontains='Manager')
+            director = get_object_or_404(CompanyEmployee, department=leave.employee.department,
+                                         title__name__icontains='Director')
             managerSignature = get_object_or_404(EmployeeAsUserSignature, employee=manager)
             directorSignature = get_object_or_404(EmployeeAsUserSignature, employee=director)
 
