@@ -3,8 +3,8 @@ from django.urls import path
 from company.views.companyEmployeeView import saveEmployee, listEmployee, updateEmployee, recordSystemUserAsEmployee
 from company.views.companyView import createCompany, listCompany, updateCompany, deleteCompany
 from company.views.departmentView import createDepartment, listDepartment, updateDepartment, deleteDepartment
-from company.views.titleView import createCompanyTitle, listTitle, updateTitle, deleteTitle
-from company.views.unitView import createUnit, listUnit, updateUnit, deleteUnit
+from company.views.titleView import createCompanyTitle, listTitle, updateTitle, deleteTitle, load_unit, loadDepartment
+from company.views.unitView import createUnit, listUnit, updateUnit, deleteUnit, loadUnit
 from company.views.userAsEmployeeView import createSignature, displayEmployeeSignature
 
 urlpatterns = [
@@ -34,5 +34,8 @@ urlpatterns = [
     path('delun/<str:pk>', deleteUnit, name='delun'),
     path('cresig/', createSignature, name='cresig'),
     path('li_em_si/<str:pk>/signature/', displayEmployeeSignature, name='li_em_si'),
+
+    path('ajax/loadUnitDropdown', load_unit, name='loadUnit'),
+    path('ajax/loadDepartmentDropdown', loadDepartment, name='load_department'),
 
 ]

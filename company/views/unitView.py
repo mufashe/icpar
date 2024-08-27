@@ -50,3 +50,10 @@ def deleteUnit(request, pk):
         return redirect('/lun')
     context = {'unit': unit}
     return render(request, 'company/deleteUnit.html', context)
+
+
+def loadUnit(request):
+    department_id = request.GET.get('unit_id')
+    unit = Unit.objects.filter(department_id=department_id)
+    context = {'unit': unit}
+    return render(request, 'company/unit/unitDropDown.html', context)

@@ -24,7 +24,7 @@ from reportlab.pdfgen import canvas
 from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Image, Spacer, Paragraph
 from PIL import Image as PILImage, UnidentifiedImageError
 
-from company.models import CompanyEmployee, Department, Title, EmployeeAsUserSignature
+from company.models import CompanyEmployee, Department, Title, EmployeeAsUserSignature, Unit
 from icparsa.decorators import allowed_users
 from leaveMan.forms.leaveForm import LeaveForm
 from leaveMan.forms.signaturePasswordForm import SignaturePasswordForm

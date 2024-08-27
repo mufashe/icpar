@@ -17,8 +17,9 @@
     <div class="row">
         <div class="col-md">
             <div class="card card-body" style="font-size: x-small">
-                <form method="post" action="" id="contractFormId"
-                      data-mebdep-url= {% url 'load_department_members_url' %}>
+                <form method="post" action="" id="titleFormId"
+                      unit_url_loader="{% url 'loadUnit' %}"
+                      department_url_loader="{% url 'load_department' %}">
                     {% csrf_token %}
                     <div class="form-row">
                         <div class="form-group col-2">
@@ -46,5 +47,37 @@
             </div>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+    <script>
+        $("#id_company").on("change", function () {
+            const url = $("#titleFormId").attr("department_url_loader");
+            const companyId = $(this).val();
+            $.ajax({
+                url: url,
+                data: {'company_id': companyId},
+                success: function (data) {
+                    console.log(data);
+                    $("#id_department").html(data)
+                }
+            });
+        });
+    </script>
+    <script>
+
+        $("#id_department").on("change", function () {
+            const url = $("#titleFormId").attr("unit_url_loader");
+            const departmentId = $(this).val();
+            $.ajax({
+                url: url,
+                data: {'department_id': departmentId},
+                success: function (data) {
+                    console.log(data);
+                    $("#id_unit").html(data)
+                }
+            });
+        });
+
+    </script>
 
 {% endblock %}

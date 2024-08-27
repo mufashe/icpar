@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 
 from company.forms.titleForm import TitleForm
+from company.models import Unit, Department
 from company.models.title import Title
 from icparsa.decorators import allowed_users
 
@@ -50,3 +51,17 @@ def deleteTitle(request, pk):
         return redirect('/lt')
     context = {'title': title}
     return render(request, 'company/deleteTitle.html', context)
+
+
+def load_unit(request):
+    department_id = request.GET.get('department_id')
+    unit = Unit.objects.filter(department_id=department_id)
+    context = {'unit': unit}
+    return render(request, 'company/title/titleDropDown.html', context)
+
+
+def loadDepartment(request):
+    company_id = request.GET.get('company_id')
+    department = Department.objects.filter(company_id=company_id)
+    context = {'department': department}
+    return render(request, 'company/department/departmentDropDown.html', context)
