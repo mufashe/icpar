@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import redirect, render, get_object_or_404
 
 from company.forms.employeeForm import EmployeeForm
-from company.models import CompanyEmployee
+from company.models import CompanyEmployee, Unit, Department, Title
 from icparsa.decorators import allowed_users
 
 
@@ -63,3 +63,23 @@ def recordSystemUserAsEmployee(request, pk):
     context = {'employeeForm': empForm}
     return render(request, 'company/employee/employee.html', context)
 
+
+def loadTitle(request):
+    department_id = request.GET.get('department_id')
+    title = Title.objects.filter(department_id=department_id).order_by('name')
+    context = {'title': title}
+    return render(request, 'company/title/titleDropDown.html', context)
+
+
+def load_unit(request):
+    department_id = request.GET.get('department_id')
+    unit = Unit.objects.filter(department_id=department_id)
+    context = {'unit': unit}
+    return render(request, 'company/unit/unitDropDown.html', context)
+
+
+def loadDepartment(request):
+    company_id = request.GET.get('company_id')
+    department = Department.objects.filter(company_id=company_id)
+    context = {'department': department}
+    return render(request, 'company/department/departmentDropDown.html', context)

@@ -1,6 +1,7 @@
 from django.urls import path
 
-from company.views.companyEmployeeView import saveEmployee, listEmployee, updateEmployee, recordSystemUserAsEmployee
+from company.views.companyEmployeeView import saveEmployee, listEmployee, updateEmployee, recordSystemUserAsEmployee, \
+    loadTitle
 from company.views.companyView import createCompany, listCompany, updateCompany, deleteCompany
 from company.views.departmentView import createDepartment, listDepartment, updateDepartment, deleteDepartment
 from company.views.titleView import createCompanyTitle, listTitle, updateTitle, deleteTitle, load_unit, loadDepartment
@@ -37,5 +38,6 @@ urlpatterns = [
 
     path('ajax/loadUnitDropdown', load_unit, name='loadUnit'),
     path('ajax/loadDepartmentDropdown', loadDepartment, name='load_department'),
+    path('ajax/loadTitleDropdown', loadTitle, name='loadTitle')
 
 ]
