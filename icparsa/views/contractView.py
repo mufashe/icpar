@@ -52,6 +52,8 @@ def listContracts(request):
             # difference = c.expirationDate - c.signedDate
             difference = contract.expirationDate - now_date
             contract.days_left = difference.days
+            if contract.days_left < 0:
+                contract.contract_status = 'EXPIRED'
             if contract.conHist >= 3:
                 messages.error(request, 'renewal contract exceeded !')
             for cs in contractSettingsList:

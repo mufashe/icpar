@@ -144,7 +144,12 @@
                                 <td>{{ c.contractType }}</td>
                                 <td>{{ c.departmentUnit }}</td>
                                 <td>{{ c.departmentUnit.email }}</td>
-                                <td>{{ c.contract_status }}</td>
+                                <td>
+                                    {% if c.contract_status == 'EXPIRED' %}
+                                        <i class="fa fa-exclamation-triangle text-danger" title="Expired"></i>
+                                    {% endif %}
+                                    {{ c.contract_status }}
+                                </td>
                                 <td>{{ c.secondParty }}</td>
                                 <td>{{ c.signedDate |date:"SHORT_DATE_FORMAT" }}</td>
                                 <td>{{ c.expirationDate |date:"SHORT_DATE_FORMAT" }}</td>
