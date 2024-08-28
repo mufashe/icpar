@@ -17,7 +17,7 @@ class UnitForm(forms.ModelForm):
         if self.instance.company is not None:
             self.fields['department'].queryset = self.instance.company.department_set.order_by('name')
         else:
-            self.fields['department'].queryset = Department.objects.none()
+            self.fields['department'].queryset = Department.objects.all()
         if 'company' in self.data:
             try:
                 company_id = int(self.data.get('company'))

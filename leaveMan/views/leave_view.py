@@ -74,6 +74,9 @@ def listLeave(request):
             Q(employee__department=user_employee.department) |
             Q(employee__title__name__icontains='director')).order_by('number')
 
+    elif 'admin' in employee_title:
+        leaveList = Leave.objects.all().order_by('number')
+
     elif 'ceo' in employee_title:
         leaveList = Leave.objects.all().order_by('number')
 

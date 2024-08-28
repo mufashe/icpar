@@ -57,7 +57,7 @@ def load_unit(request):
     department_id = request.GET.get('department_id')
     unit = Unit.objects.filter(department_id=department_id)
     context = {'unit': unit}
-    return render(request, 'company/title/titleDropDown.html', context)
+    return render(request, 'company/unit/unitDropDown.html', context)
 
 
 def loadDepartment(request):

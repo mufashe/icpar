@@ -18,7 +18,7 @@
         <div class="col-md">
             <div class="card card-body" style="font-size: x-small">
                 <form method="post" action="" id="unitFormId"
-                      data-mebdep-url= {% url 'loadUnit' %}>
+                      department_url_loader= {% url 'load_department' %}>
                     {% csrf_token %}
                     <div class="row">
                         <div class="form-group col-2">
@@ -50,18 +50,34 @@
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script>
-        $("#id_unit").on("change", function () {
-            const url = $("unitFormId").attr("data-mebdep-url");
-            const unitId = $(this).val();
+        $("#id_company").on("change", function () {
+            const url = $("#unitFormId").attr("department_url_loader");
+            const companyId = $(this).val();
             $.ajax({
                 url: url,
-                data: {'unit_id': unitId},
+                data: {'company_id': companyId},
                 success: function (data) {
                     console.log(data);
-                    $("#id_unit").html(data)
+                    $("#id_department").html(data)
                 }
-            })
+            });
         });
+
     </script>
+
+{#    <script>#}
+{#        $("#id_unit").on("change", function () {#}
+{#            const url = $("unitFormId").attr("department_url_loader");#}
+{#            const unitId = $(this).val();#}
+{#            $.ajax({#}
+{#                url: url,#}
+{#                data: {'unit_id': unitId},#}
+{#                success: function (data) {#}
+{#                    console.log(data);#}
+{#                    $("#id_unit").html(data)#}
+{#                }#}
+{#            })#}
+{#        });#}
+{#    </script>#}
 
 {% endblock %}

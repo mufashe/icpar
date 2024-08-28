@@ -2,7 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect, render
 
 from company.forms.unitForm import UnitForm
-from company.models import Unit
+from company.models import Unit, Department
 from icparsa.decorators import allowed_users
 
 
@@ -57,3 +57,10 @@ def loadUnit(request):
     unit = Unit.objects.filter(department_id=department_id)
     context = {'unit': unit}
     return render(request, 'company/unit/unitDropDown.html', context)
+
+
+def loadDepartment(request):
+    company_id = request.GET.get('department_id')
+    department = Department.objects.filter(company_id=company_id)
+    context = {'department': department}
+    return render(request, 'company/department/departmentDropDown.html', context)
