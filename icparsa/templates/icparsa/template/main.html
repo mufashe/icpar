@@ -58,32 +58,32 @@
                     {#                            <span class="ms-1 d-none d-sm-inline">Take a Leave</span>#}
                     {#                        </a>#}
                     {#                    </li>#}
-                    {% if  request.user in leaveManager or request.user in admins or request.user in end_users %}
-                        <li>
-                            <a href="#submenu01" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
-                                <i class="fa-solid fa-person-walking-arrow-right"></i>
-                                <span class="ms-1 d-none d-sm-inline">Leave</span>
-                            </a>
-                            <ul class="collapse  nav flex-column ms-1" id="submenu01" data-bs-parent="#menu">
-                                <li class="w-100">
-                                    <a href="{% url 'gl' pk=employee.pk %}" class="nav-link px-0">
-                                        <i class="bi bi-file-plus"></i>
-                                        <span class="d-none d-sm-inline">Take Leave</span> </a>
-                                </li>
-                                <li class="w-100">
-                                    <a href="{% url 'rl' %}" class="nav-link px-0">
-                                        <i class="bi bi-file-plus"></i>
-                                        <span class="d-none d-sm-inline">New</span> </a>
-                                </li>
-                                <li>
-                                    <a href="{% url 'lil' %}" class="nav-link px-0">
-                                        <i class="bi bi-card-checklist"></i> <span
-                                            class="d-none d-sm-inline">List</span>
-                                    </a>
-                                </li>
-                            </ul>
-                        </li>
-                    {% endif %}
+                    {#                    {% if  request.user in leaveManager or request.user in admins or request.user in end_users %}#}
+                    <li>
+                        <a href="#submenu01" data-bs-toggle="collapse" class="nav-link px-0 align-middle">
+                            <i class="fa-solid fa-person-walking-arrow-right"></i>
+                            <span class="ms-1 d-none d-sm-inline">Leave</span>
+                        </a>
+                        <ul class="collapse  nav flex-column ms-1" id="submenu01" data-bs-parent="#menu">
+                            <li class="w-100">
+                                <a href="{% url 'gl' pk=employee.pk %}" class="nav-link px-0">
+                                    <i class="bi bi-file-plus"></i>
+                                    <span class="d-none d-sm-inline">Take Leave</span> </a>
+                            </li>
+                            <li class="w-100">
+                                <a href="{% url 'rl' %}" class="nav-link px-0">
+                                    <i class="bi bi-file-plus"></i>
+                                    <span class="d-none d-sm-inline">New</span> </a>
+                            </li>
+                            <li>
+                                <a href="{% url 'lil' %}" class="nav-link px-0">
+                                    <i class="bi bi-card-checklist"></i> <span
+                                        class="d-none d-sm-inline">List</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    {#                    {% endif %}#}
                     {% if  request.user in correspondenceManager  or request.user in admins %}
                         <li>
                             <a href="#submenu02" data-bs-toggle="collapse" class="nav-link px-0 align-middle">

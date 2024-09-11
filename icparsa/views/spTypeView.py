@@ -17,3 +17,9 @@ def createNewType(request):
         return redirect('spt')
     context = {'secondPartyForm': secondPartyForm}
     return render(request, 'icparsa/secondParty/type/sctype.html', context)
+
+
+def listSecondPartyType(request):
+    secondPartyTypes = SecondPartyType.objects.all()
+    context = {'secondPartyTypes': secondPartyTypes}
+    return render(request, 'icparsa/secondParty/type/listsecondPartyType.html', context)

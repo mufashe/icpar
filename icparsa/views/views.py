@@ -12,7 +12,7 @@ from icparsa.models.models import Contract, SecondParty
 def home(request):
     user = request.user
     totalContracts = Contract.objects.all().count()
-    canceledContracts = Contract.objects.filter(contract_status='CANCELED').count()
+    canceledContracts = Contract.objects.filter(contract_status='EXPIRED').count()
     # canceledContracts = Contract.objects.filter(
     #     contractCategory__contract__expirationDate__lte=datetime.datetime.now()).count()
     signedContracts = Contract.objects.filter(contract_status='SIGNED').count()

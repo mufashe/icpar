@@ -26,6 +26,7 @@ urlpatterns = [
     path('delinst/<int:pk>', institutionView.deleteInstitution, name="delinst"),
     path('schin/', institutionView.searchWithCompanyName, name="schin"),
     path('spt/', spTypeView.createNewType, name='spt'),
+    path('lspt/', spTypeView.listSecondPartyType, name='lspt'),
 
     path('dep/', departmentView.createDepartment, name='dep'),
     path('ldep/', departmentView.listDepartment, name='ldep'),
