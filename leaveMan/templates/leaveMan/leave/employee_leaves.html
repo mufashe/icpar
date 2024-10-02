@@ -16,12 +16,13 @@
                             <th>Total Leave Days</th>
                             <th>Leave Days</th>
                             <th>Used Leave Days</th>
+                            <th>Generate</th>
                         </tr>
                         </thead>
                         <tbody>
                         {% for leave in employee_leaves %}
                             <tr>
-                                <td>{{ leave.number }}</td>
+                                <td>{{ forloop.counter }}</td>
                                 <td>{{ leave.employee.first_name }}</td>
                                 <td>{{ leave.employee.last_name }}</td>
                                 <td>{{ leave.inDate }}</td>
@@ -30,6 +31,9 @@
                                 <td>{{ leave.total_leave_days }}</td>
                                 <td>{{ leave.leave_days }}</td>
                                 <td>{{ leave.leave_days_used }}</td>
+                                <td><a href="{% url 'loadleave' leave.id %}">Generate
+                                    <i class="fa fa-download" aria-hidden="true"></i>
+                                </a></td>
                             </tr>
                         {% endfor %}
                         </tbody>
