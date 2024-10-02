@@ -8,20 +8,28 @@
                         <thead class="thead-light">
                         <tr>
                             <th>Leave Number</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
                             <th>Start Date</th>
                             <th>End Date</th>
                             <th>Leave Status</th>
                             <th>Total Leave Days</th>
+                            <th>Used Leave Days</th>
+                            <th>Leave Days</th>
                         </tr>
                         </thead>
                         <tbody>
                         {% for leave in employee_leaves %}
                             <tr>
                                 <td>{{ leave.number }}</td>
+                                <td>{{ leave.employee.first_name }}</td>
+                                <td>{{ leave.employee.last_name }}</td>
                                 <td>{{ leave.inDate }}</td>
                                 <td>{{ leave.outDate }}</td>
                                 <td>{{ leave.leave_status }}</td>
                                 <td>{{ leave.total_leave_days }}</td>
+                                <td>{{ leave.leave_days_used }}</td>
+                                <td>{{ leave.leave_days }}</td>
                             </tr>
                         {% endfor %}
                         </tbody>
