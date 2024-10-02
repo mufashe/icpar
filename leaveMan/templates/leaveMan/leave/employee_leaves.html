@@ -1,0 +1,33 @@
+{% extends 'icparsa/template/main.html' %}
+{% block content %}
+    <div class="row">
+        <div class="col-md">
+            <div class="card card-body" style="font-size: x-small">
+                <div class="contract-container" style="height: 450px; overflow: auto;">
+                    <table class="table table-hover table-bordered table-sm small " id="tbl">
+                        <thead class="thead-light">
+                        <tr>
+                            <th>Leave Number</th>
+                            <th>Start Date</th>
+                            <th>End Date</th>
+                            <th>Leave Status</th>
+                            <th>Total Leave Days</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for leave in employee_leaves %}
+                            <tr>
+                                <td>{{ leave.number }}</td>
+                                <td>{{ leave.inDate }}</td>
+                                <td>{{ leave.outDate }}</td>
+                                <td>{{ leave.leave_status }}</td>
+                                <td>{{ leave.total_leave_days }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

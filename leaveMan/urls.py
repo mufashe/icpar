@@ -14,5 +14,6 @@ urlpatterns = [
     path('holidays/<str:country>/', holidays_view, name='holidays'),
     path('phapi/<str:country>/<int:year>/', publicHolidaysAPICaller, name='phapi'),
     path('loadleave/<int:pk>', generateLeave, name='loadleave'),
+    path('myLeaves', my_leave, name='myLeaves'),
 
 ]

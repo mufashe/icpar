@@ -88,6 +88,13 @@ def listLeave(request):
     return render(request, 'leaveMan/leave/leaveList.html', context)
 
 
+def my_leave(request):
+    employee_as_user = CompanyEmployee.objects.get(id=request.user.id)
+    employee_leaves = Leave.objects.filter(employee=employee_as_user).order_by('inDate')
+    context = {'employee_leaves': employee_leaves, 'employee_as_user': employee_as_user}
+    return render(request, 'leaveMan/leave/employee_leaves.html', context)
+
+
 @login_required(login_url='log')
 @allowed_users(allowed_roles=['admin', 'leaveManager'])
 def updateLeave(request, pk):
