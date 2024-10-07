@@ -47,7 +47,7 @@ def home(request):
                'end_users': end_users, 'admins': admins, 'contracts': contracts, 'contractReport': contractReport,
                'is_leaveManager': is_leaveManager, 'is_correspondenceManager': is_correspondenceManager,
                'procurementManager': procurementManager, 'is_admin': is_admin, 'leaveManager': leaveManager,
-               'correspondenceManager': correspondenceManager}
+               'correspondenceManager': correspondenceManager, 'admin': admin}
     return render(request, 'icparsa/template/dashboard.html', context)
 
 

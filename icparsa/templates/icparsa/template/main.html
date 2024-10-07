@@ -75,17 +75,19 @@
                                     <i class="bi bi-file-plus"></i>
                                     <span class="d-none d-sm-inline">My Leave</span> </a>
                             </li>
-{#                            <li class="w-100">#}
+                            {#                            <li class="w-100">#}
                             {#                                <a href="{% url 'rl' %}" class="nav-link px-0">#}
                             {#                                    <i class="bi bi-file-plus"></i>#}
                             {#                                    <span class="d-none d-sm-inline">New</span> </a>#}
                             {#                            </li>#}
-                            <li>
-                                <a href="{% url 'lil' %}" class="nav-link px-0">
-                                    <i class="bi bi-card-checklist"></i> <span
-                                        class="d-none d-sm-inline">List</span>
-                                </a>
-                            </li>
+                            {% if request.user in admins %}
+                                <li>
+                                    <a href="{% url 'lil' %}" class="nav-link px-0">
+                                        <i class="bi bi-card-checklist"></i> <span
+                                            class="d-none d-sm-inline">List</span>
+                                    </a>
+                                </li>
+                            {% endif %}
                         </ul>
                     </li>
                     {#                    {% endif %}#}
