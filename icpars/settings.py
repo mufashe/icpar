@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'icparsa',
     'leaveMan',
     'company',
+    'filemanager',
     'correspondence',
     "crispy_forms",
     "crispy_bootstrap4",
@@ -138,6 +139,8 @@ STATIC_URL = 'static/'
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/img/'
+# MEDIA_URL ='/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 STATICFILES_DIRS = [
 
